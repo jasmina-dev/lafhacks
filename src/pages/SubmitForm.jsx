@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FileUploader } from "react-drag-drop-files";
 import axiosInstance from "../utils/axios"; // Import Axios instance
 
@@ -8,6 +8,8 @@ import "./SubmitForm.css";
 const fileTypes = ["PDF"];
 
 export default function SubmitForm() {
+  const navigate = useNavigate(); // Initialize useNavigate
+
   const [formData, setFormData] = useState({
     topic: "",
     days: 0,
@@ -45,6 +47,8 @@ export default function SubmitForm() {
       const studyGuideId = response.data.study_guide_id;
       console.log("Study Guide ID:", studyGuideId);
       console.log(response);
+      // redirect to the generated study guide page
+      navigate(`/study/${studyGuideId}`);
     } catch (error) {
       console.error(error);
       alert("Failed to submit form");
