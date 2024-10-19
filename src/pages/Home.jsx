@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import StudyGuide from "../components/StudyGuide";
+import Flashcard from "../components/Flashcard";
 
 export default function Home() {
   return (
@@ -8,7 +10,6 @@ export default function Home() {
       <nav className="navbar">
         <div className="logo">Cramr</div>
         <ul className="nav-links">
-          <Link to="/about">About</Link>
           <Link to="/login">Login</Link>
         </ul>
       </nav>

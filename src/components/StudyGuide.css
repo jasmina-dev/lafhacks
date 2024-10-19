@@ -1,0 +1,59 @@
+/* Center the document container */
+.doc-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    padding: 20px;
+    background-color: #f7f9fc; /* Light background */
+  }
+  
+  /* Style the document itself */
+  .doc {
+    background-color: #fff;
+    padding: 40px;
+    max-width: 800px; /* Limit the width of the document */
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    font-family: 'Georgia', serif; /* Nice font for readability */
+    line-height: 1.6; /* Better readability */
+    color: #1c1e21; /* Text color */
+    overflow-y: auto;
+  }
+  
+  /* Typography for markdown content */
+  .doc h1, .doc h2, .doc h3, .doc h4, .doc h5, .doc h6 {
+    color: #1c1e21;
+    margin-top: 20px;
+    font-weight: bold;
+  }
+  
+  .doc p {
+    margin: 10px 0;
+  }
+  
+  .doc blockquote {
+    margin: 20px 0;
+    padding: 10px 20px;
+    background-color: #f1f3f4;
+    border-left: 5px solid #ccc;
+  }
+  
+  .doc pre {
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+  
+  .doc ul, .doc ol {
+    margin-left: 20px;
+    padding-left: 10px;
+  }
+  
+  .doc a {
+    color: #007acc; /* Link color */
+    text-decoration: none
+  }  
