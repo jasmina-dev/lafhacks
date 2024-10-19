@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import SubmitForm from "./pages/SubmitForm";
 import "./App.css";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/submit" element={<SubmitForm />} />
       </Routes>
     </Router>
   );

@@ -8,10 +8,8 @@ export default function Home() {
       <nav className="navbar">
         <div className="logo">Cramr</div>
         <ul className="nav-links">
-          <li>Features</li>
-          <li>Pricing</li>
-          <li>Blog</li>
-          <li>Sign In</li>
+          <Link to="/about">About</Link>
+          <Link to="/login">Login</Link>
         </ul>
       </nav>
       <section className="hero">
@@ -19,7 +17,9 @@ export default function Home() {
         <p className="hero-subheader">
           Cramr will generate a study guide for you in seconds.
         </p>
-        <button className="cta-button">Get Started</button>
+        <Link to="/submit" className="submit-btn">
+          Try me!
+        </Link>
       </section>
     </div>
   );

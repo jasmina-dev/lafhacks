@@ -1,0 +1,102 @@
+/* Global Style (Reuse from Home.css) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  body {
+    background-color: #f7f9fc;
+  }
+  
+  /* Form Container */
+  .form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 20px;
+  }
+  
+  .form-header {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1c1e21;
+    margin-bottom: 20px;
+  }
+  
+  .study-form {
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+  }
+  
+  /* Form Labels and Inputs */
+  .form-label {
+    font-size: 1rem;
+    color: #1c1e21;
+    margin-bottom: 8px;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #dcdcdc;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #1c1e21;
+    background-color: #f7f9fc;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-input:focus {
+    border-color: #1c1e21;
+    outline: none;
+  }
+  
+  /* Drag and Drop Area */
+  .drag-drop-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    border: 2px dashed #dcdcdc;
+    border-radius: 6px;
+    background-color: #f7f9fc;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #4f4f4f;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+  }
+  
+  .drag-drop-zone.active {
+    border-color: #1c1e21;
+    background-color: #e0efff;
+  }
+  
+  .drag-drop-zone p {
+    margin: 0;
+    font-size: 1rem;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  /* Submit Button */
+  .form-submit {
+    font-size: 1.2rem;
+    padding: 12px 20px;
+    color: white;
+    background-color: #1c1e21;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 20px auto 0; 
+    display: block; 
+  }  
