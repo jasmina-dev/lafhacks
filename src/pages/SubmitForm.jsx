@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FileUploader } from "react-drag-drop-files";
+import axiosInstance from "../utils/axios"; // Import Axios instance
 
 import "./SubmitForm.css";
 
@@ -12,9 +13,42 @@ export default function SubmitForm() {
     days: 0,
   });
 
-  const [file, setFile] = useState(null);
-  const handleChange = (file) => {
-    setFile(file);
+  const [files, setFiles] = useState([]); // Changed from 'file' to 'files'
+
+  const handleChange = (fileList) => {
+    // 'fileList' is an array when multiple={true}
+    setFiles(fileList);
+    console.log("Selected files:", fileList);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append("topic", formData.topic);
+    data.append("days", formData.days);
+
+    if (files && files.length > 0) {
+      // Append each file individually
+      for (let i = 0; i < files.length; i++) {
+        data.append("file", files[i]);
+      }
+    }
+
+    // For debugging: log the FormData entries
+    for (let pair of data.entries()) {
+      console.log(`${pair[0]}: ${pair[1]}`);
+    }
+
+    try {
+      const response = await axiosInstance.post("/create_study_guide", data);
+      alert("Form submitted successfully"); //go to next page or something
+      const studyGuideId = response.data.study_guide_id;
+      console.log("Study Guide ID:", studyGuideId);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to submit form");
+    }
   };
 
   return (
@@ -28,8 +62,7 @@ export default function SubmitForm() {
       </nav>
       <div className="form-container">
         <h2 className="form-header">Generate Your Study Guide</h2>
-        <form className="study-form">
-          {/* Topic Input */}
+        <form className="study-form" onSubmit={handleSubmit}>
           <label htmlFor="topic" className="form-label">
             Topic
           </label>
@@ -39,9 +72,12 @@ export default function SubmitForm() {
             name="topic"
             placeholder="Enter the topic you need help with..."
             className="form-input"
+            value={formData.topic}
+            onChange={(e) =>
+              setFormData({ ...formData, topic: e.target.value })
+            }
           />
 
-          {/* Number of Days Input */}
           <label htmlFor="days" className="form-label">
             Days Left to Study
           </label>
@@ -52,9 +88,10 @@ export default function SubmitForm() {
             placeholder="How many days until your exam?"
             className="form-input"
             min="0"
+            value={formData.days}
+            onChange={(e) => setFormData({ ...formData, days: e.target.value })}
           />
 
-          {/* Drag and Drop Area */}
           <label className="form-label">Upload Study Materials</label>
           <div>
             <FileUploader
@@ -65,7 +102,6 @@ export default function SubmitForm() {
             />
           </div>
 
-          {/* Submit Button */}
           <button type="submit" className="form-submit">
             Generate Guide
           </button>
