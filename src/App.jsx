@@ -5,6 +5,8 @@ import SubmitForm from "./pages/SubmitForm";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Study from "./pages/Study";
+import Flashcards from "./pages/Flashcards";
+import Chatbot from "./pages/Chatbot";
 import "./App.css";
 
 function App() {
@@ -18,6 +20,10 @@ function App() {
         <Route path="study">
           <Route path=":id" element={<Study />} />
         </Route>
+        <Route path="flashcards">
+          <Route path=":id" element={<Flashcards />} />
+        </Route>
+        <Route path="/chatbot" element={<Chatbot />} />
       </Routes>
     </Router>
   );

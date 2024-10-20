@@ -1,3 +1,19 @@
+.flashcards-btn {
+    background-color: #1c1e21;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    max-width: 200px;
+    margin-top: 20px;
+}
+
 .loading {
     display: flex;
     justify-content: center;
