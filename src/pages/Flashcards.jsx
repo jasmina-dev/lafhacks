@@ -44,7 +44,7 @@ export default function Flashcards() {
       try {
         setLoading(true);
         const response = await axiosInstance.get(`/flashcards/${id}`);
-        setFlashcards(JSON.parse(parseJson(response.data.flashcards)));
+        setFlashcards(response.data.flashcards);
         setSuccess(true);
         setLoading(false);
       } catch (error) {
