@@ -45,6 +45,7 @@ export default function SubmitForm() {
       const response = await axiosInstance.post("/create_study_guide", data);
       alert("Form submitted successfully"); //go to next page or something
       const studyGuideId = response.data.study_guide_id;
+
       console.log("Study Guide ID:", studyGuideId);
       console.log(response);
       // redirect to the generated study guide page
