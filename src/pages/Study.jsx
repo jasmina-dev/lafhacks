@@ -23,29 +23,41 @@ export default function StudyPage() {
   };
 
   useEffect(() => {
+    let isMounted = true; // Ensure the component is still mounted before updating state
+
     const fetchData = async () => {
       try {
         setLoading(true);
         const response = await axiosInstance.get(`/study/${id}`);
         console.log(response);
-        setStudy({
-          body: response.data,
-        });
-        setSuccess(true);
-        if (response.data.status === "completed") {
-          setLoading(false);
-          setSuccess(true);
-        } else if (response.data.status === "pending") {
-          // Optionally, retry fetching data after some delay
-          setTimeout(fetchData, 1000); // Retry if the status is still pending
+
+        if (isMounted) {
+          // Only set state if the component is still mounted
+          setStudy({
+            body: response.data,
+          });
+
+          if (response.data.status === "completed") {
+            setLoading(false);
+            setSuccess(true);
+          } else if (response.data.status === "pending") {
+            setTimeout(fetchData, 5000); // Retry after 5 seconds if still pending
+          }
         }
       } catch (error) {
         console.error(error);
-        setTimeout(fetchData, 1000);
+        if (isMounted) {
+          setTimeout(fetchData, 10000); // Retry after 1 second if there's an error
+        }
       }
     };
 
     fetchData();
+
+    // Cleanup to prevent memory leaks and unnecessary API calls
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
 
   return (
@@ -65,6 +77,12 @@ export default function StudyPage() {
       )}
       {!loading && study && (
         <div>
+          <nav className="navbar">
+            <div className="logo">Cramr</div>
+            <ul className="nav-links">
+              <Link to="/">Home</Link>
+            </ul>
+          </nav>
           <Link to={`/flashcards/${id}`} className="flashcards-btn">
             Get Flashcards
           </Link>
