@@ -23,6 +23,9 @@ export default function StudyPage() {
         } else if (status === "failed") {
           setError("Failed to load study guide.");
           setLoading(false);
+        } else {
+          // If the status is neither completed nor failed, retry fetching after a delay
+          setTimeout(fetchData, 5000);
         }
       } else {
         setError("No data received.");
@@ -30,7 +33,7 @@ export default function StudyPage() {
       }
     } catch (err) {
       console.error("Error fetching data:", err);
-      setTimeout(fetchData, 5000); // Retry after 5 seconds
+      setTimeout(fetchData, 5000); // Retry after 5 seconds if an error occurs
     }
   }, [id]);
 
