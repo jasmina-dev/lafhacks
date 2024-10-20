@@ -1,48 +1,61 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import StudyGuide from "../components/StudyGuide";
 import "./Study.css";
 
 export default function StudyPage() {
-  let { id } = useParams();
-  const [study, setStudy] = React.useState(null);
-  const [success, setSuccess] = React.useState(false);
-  const [loading, setLoading] = React.useState(true);
+  const { id } = useParams();
+  const [study, setStudy] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axiosInstance.get(`/study/${id}`);
-        console.log(response);
-        setStudy({
-          body: response.data,
-        });
-        setSuccess(true);
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await axiosInstance.get(`/study/${id}`);
+
+      if (response.data) {
+        const { status, data } = response.data;
+
+        if (status === "completed") {
+          setStudy(data);
+          setLoading(false);
+        } else if (status === "failed") {
+          setError("Failed to load study guide.");
+          setLoading(false);
+        }
+      } else {
+        setError("No data received.");
         setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setTimeout(fetchData, 5000);
       }
-    };
-
-    fetchData();
+    } catch (err) {
+      console.error("Error fetching data:", err);
+      setTimeout(fetchData, 5000); // Retry after 5 seconds
+    }
   }, [id]);
 
-  return (
-    <div>
-      {loading && (
-        <p className="loading">
-          Generating Guide
-          <span className="loading-dots">
-            <span>.</span>
-            <span>.</span>
-            <span>.</span>
-          </span>
-        </p>
-      )}
-      {!loading && study && <StudyGuide body={study.body} />}
-    </div>
-  );
+  useEffect(() => {
+    if (loading) {
+      fetchData();
+    }
+  }, [fetchData, loading]);
+
+  if (loading) {
+    return (
+      <p className="loading">
+        Generating Guide
+        <span className="loading-dots">
+          <span>.</span>
+          <span>.</span>
+          <span>.</span>
+        </span>
+      </p>
+    );
+  }
+
+  if (error) {
+    return <p className="error-message">{error}</p>;
+  }
+
+  return study ? <StudyGuide body={study} /> : null;
 }
