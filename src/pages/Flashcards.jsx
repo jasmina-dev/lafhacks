@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { json, useParams } from "react-router-dom";
 import axiosInstance from "../utils/axios";
 import "./Study.css";
 import Lottie from "react-lottie";
@@ -25,11 +25,16 @@ export default function Flashcards() {
   };
 
   const parseJson = (jsonString) => {
+    const startIndex = jsonString.indexOf("[");
+    if (startIndex !== -1) {
+      jsonString = jsonString.substring(startIndex);
+    }
+
     jsonString = jsonString.trim();
 
     const result = jsonString.replace(/}\s*{/g, "},{");
 
-    console.log(`[${result}]`);
+    //console.log(`[${result}]`);
 
     return `[${result}]`;
   };
@@ -61,7 +66,7 @@ export default function Flashcards() {
       {loading && (
         <>
           <h1 className="loading">
-            Generating Guide
+            Generating Flashcards
             <span className="loading-dots">
               <span>.</span>
               <span>.</span>
