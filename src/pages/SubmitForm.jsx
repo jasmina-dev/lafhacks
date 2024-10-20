@@ -10,6 +10,9 @@ const fileTypes = ["PDF"];
 export default function SubmitForm() {
   const navigate = useNavigate(); // Initialize useNavigate
 
+  const [success, setSuccess] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const [formData, setFormData] = useState({
     topic: "",
     days: 0,
@@ -25,6 +28,7 @@ export default function SubmitForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitted(true);
     const data = new FormData();
     data.append("topic", formData.topic);
     data.append("days", formData.days);
@@ -43,7 +47,7 @@ export default function SubmitForm() {
 
     try {
       const response = await axiosInstance.post("/create_study_guide", data);
-      alert("Form submitted successfully"); //go to next page or something
+      setSuccess(true);
       const studyGuideId = response.data.study_guide_id;
 
       console.log("Study Guide ID:", studyGuideId);
@@ -51,6 +55,7 @@ export default function SubmitForm() {
       // redirect to the generated study guide page
       navigate(`/study/${studyGuideId}`);
     } catch (error) {
+      setSuccess(false);
       console.error(error);
       alert("Failed to submit form");
     }
@@ -106,6 +111,10 @@ export default function SubmitForm() {
               types={fileTypes}
             />
           </div>
+
+          {isSubmitted && success === false && (
+            <p>There was an issue uploading your file. Please try again.</p>
+          )}
 
           <button type="submit" className="form-submit">
             Generate Guide
